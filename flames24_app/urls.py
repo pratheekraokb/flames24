@@ -10,4 +10,7 @@ urlpatterns = [
     path('about/', views.about, name="about"),
 ]
 
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+# Serve media files during development
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
