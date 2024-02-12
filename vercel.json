@@ -7,14 +7,6 @@
   ],
   "routes": [
     {
-      "src": "/static/(.*)",
-      "dest": "/flames24_app/static/$1"
-    },
-    {
-      "src": "/media/(.*)",
-      "dest": "/flames24_app/media/$1"
-    },
-    {
       "src": "/(.*)",
       "dest": "flames24/wsgi.py"
     }
