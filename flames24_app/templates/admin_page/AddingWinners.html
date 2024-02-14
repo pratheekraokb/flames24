@@ -1,0 +1,208 @@
+{% extends 'admin_page/admin_base.html' %}
+
+{% block styles %}
+<style>
+    /* Add your custom styles here */
+    .form-container {
+        max-width: 500px;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+    }
+
+    .form-container label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .form-container input[type="text"],
+    .form-container input[type="number"],
+    .form-container select,
+    .form-container input[type="submit"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        box-sizing: border-box;
+    }
+
+    .form-container input[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+
+    .form-container input[type="submit"]:hover {
+        background-color: #45a049;
+    }
+    button {
+        font-weight:bold;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <br/>
+    <h1>Add Winners</h1>
+    <br/>
+    <form id="winnerForm" method="POST">
+        {% csrf_token %}
+        <div>
+            <label for="event_id">Select Event:</label>
+            <select id="event_id" name="event_id" required>
+                {% for event in events %}
+                    <option value="{{ event.id }}">{{ event.event_name }} - {{ event.event_type }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div id="winner-details">
+        </div>
+        <br/>
+        <button type="button" id="add-winner" style="padding:10px;font-weight:bold;width:100%">Add Winner Details</button>
+        <br/>
+        <input type="submit" style="font-weight:bold; margin-top:10px;" value="Submit Winners Details">
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    let winnerCount = 1; // Initialize winner count
+
+    
+
+    $(document).ready(function() {
+
+        // Event ID change handler
+        $("#event_id").change(function() {
+            const eventId = $(this).val();
+
+            // Implement AJAX call to fetch departments based on event ID
+            $.ajax({
+                url: "{% url 'fetch_departments' %}", // Replace with your URL for fetching departments
+                type: "GET",
+                data: { event_id: eventId },
+                success: function(response) {
+                    if (response.success) {
+                        // Update department options in all winner sections
+                        $(".winner-section select[id^='department_']").each(function() {
+                            $(this).empty();
+                            $(this).append("<option value=''>Select Department</option>");
+                            for (const department of response.departments) {
+                                $(this).append("<option value='" + department.id + "'>" + department.dept_name + "</option>");
+                            }
+                        });
+                    } else {
+                        alert("Error fetching departments: " + response.message);
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    alert("An error occurred fetching departments: " + errorThrown);
+                }
+            });
+        });
+
+        // Add winner button click handler
+        $("#add-winner").click(function() {
+            addWinner();
+            
+        });
+
+        // Form submission
+        // Form submission
+$("#winnerForm").submit(function(event) {
+    event.preventDefault(); // Prevent default form submission
+
+    // Validate winner data for each section
+    let isValid = true;
+    $(".winner-section").each(function() {
+        const winnerId = $(this).find("input[id^='winner_athlete_']").attr("id").split("_")[2];
+        const athleteName = $(this).find("input[id^='winner_athlete_']").val();
+        const className = $(this).find("input[id^='class_name_']").val();
+        const departmentId = $(this).find("select[id^='department_']").val();
+        const position = $(this).find("select[id^='position_']").val();
+        const points = $(this).find("input[id^='points_']").val();
+
+        if (!athleteName || !className || !departmentId || !position || !points) {
+            alert("Please fill in all required fields for Winner " + winnerId);
+            isValid = false;
+            return false; // Exit the loop if any validation fails
+        }
+    });
+
+    if (isValid) {
+        // Form data is valid, submit the form using AJAX
+        const formData = new FormData($("#winnerForm")[0]);
+        $.ajax({
+            url: "/adminSection/add-winners/", // Replace with your actual URL
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                if (response.success) {
+                    alert("Winners added successfully!");
+                    // Clear the form or redirect to another page
+                    $("#winner-details").empty(); // Clear winner sections
+                    winnerCount = 1; // Reset winner count
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                alert("An error occurred: " + errorThrown);
+            }
+        });
+    }
+});
+
+
+        function addWinner() {
+            const winnerNumber = "Winner Details ";
+
+            
+            const winnerHtml = `
+                <div class="winner-section">
+                    <h4>${winnerNumber}</h4>
+                    <br/>
+                    <div>
+                        <label for="winner_athlete_${winnerCount}">Player Name:</label>
+                        <input type="text" id="winner_athlete_${winnerCount}" name="winner_athlete_${winnerCount}" placeholder="eg: Virat Kohli" required>
+                    </div>
+                    <div>
+                        <label for="class_name_${winnerCount}">Class:</label>
+                        <input type="text" id="class_name_${winnerCount}" name="class_name_${winnerCount}" placeholder="eg: S5 CSE B" required>
+                    </div>
+                    <div>
+                        <label for="department_${winnerCount}">Department:</label>
+                        <select id="department_${winnerCount}" name="department_${winnerCount}" required>
+                          
+                            {% for department in departments %}
+                                <option value="{{ department.id }}">{{ department.dept_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div>
+                        <label for="position_${winnerCount}">Position:</label>
+                        <select id="position_${winnerCount}" name="position_${winnerCount}" required>
+                        
+                            <option value="First">First</option>
+                            <option value="Second">Second</option>
+                            <option value="Third">Third</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="points_${winnerCount}">Points:</label>
+                        <input type="number" id="points_${winnerCount}" name="points_${winnerCount}" placeholder="eg:- 10" required>
+                    </div>
+                </div>`;
+            $("#winner-details").append(winnerHtml);
+            winnerCount++; // Increment winner count
+        }
+    });
+</script>
+{% endblock %}

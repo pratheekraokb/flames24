@@ -61,8 +61,9 @@
         .content {
             width: 75%;
             height: 100%;
-            padding-left:10px;
+            padding-left:30px;
             /* background-color: blue; */
+
 
         }
 
@@ -120,8 +121,10 @@
             <div class="FeatureBtns">
                 <button id="createBtn" onclick="linkTo('/adminSection/create-department/')">Create and Edit Department</button>
                 <button id="addEventBtn" onclick="linkTo('/adminSection/add-event/')">Add Events</button>
-                {% comment %} <button id="addFixutureBtn" onclick="linkTo('/adminsection/add-fixtures/')">Add
-                    Schedules/Fixtures</button>
+                <button id="addWinner" onclick="linkTo('/adminSection/add-winners/')">Add Winners</button>
+
+                {% comment %}  {% endcomment %}
+                {% comment %} 
                 <button id="updateBtn" onclick="linkTo('/adminsection/update-scores/')">Update Cricket Score/Result</button>
                 <button id="updateBtn" onclick="linkTo('/adminsection/update-scores-football/')">Update Football Score/Result</button>
                 <br/> {% endcomment %}

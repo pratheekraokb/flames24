@@ -33,6 +33,7 @@ class Winner(models.Model):
         ('Third', 'Third'),
     )
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    winner_athlete = models.CharField(max_length=200, blank=True, default="")
     position = models.CharField(choices=POSITION_CHOICES, max_length=10)
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
     class_name = models.CharField(max_length=100)  # Assuming class is a string value like "S1…
@@ -40,6 +41,7 @@ class Winner(models.Model):
 
     class Meta:
         db_table = 'Winner'
+        unique_together = ['event', 'winner_athlete', 'position']
 
 class DepartmentResult(models.Model):
     id = models.AutoField(primary_key=True)
