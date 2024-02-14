@@ -118,12 +118,13 @@
         <div class="dashboardLeft">
             <h1>Admin Dashboard</h1>
             <div class="FeatureBtns">
-                <button id="createBtn" onclick="linkTo('/adminsection/create-department')">Create and Edit Department</button>
-                <button id="addFixutureBtn" onclick="linkTo('/adminsection/add-fixtures/')">Add
+                <button id="createBtn" onclick="linkTo('/adminSection/create-department/')">Create and Edit Department</button>
+                <button id="addEventBtn" onclick="linkTo('/adminSection/add-event/')">Add Events</button>
+                {% comment %} <button id="addFixutureBtn" onclick="linkTo('/adminsection/add-fixtures/')">Add
                     Schedules/Fixtures</button>
                 <button id="updateBtn" onclick="linkTo('/adminsection/update-scores/')">Update Cricket Score/Result</button>
                 <button id="updateBtn" onclick="linkTo('/adminsection/update-scores-football/')">Update Football Score/Result</button>
-                <br/>
+                <br/> {% endcomment %}
                 <button id="returnHome" onclick="linkTo('/')">Return to Home</button>
             </div>
         </div>

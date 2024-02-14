@@ -8,13 +8,22 @@ class Event(models.Model):
     event_type = models.CharField(choices=(('Men', 'Men'), ('Women', 'Women')), max_length=5)
     event_date = models.DateField()
 
+    class Meta:
+        unique_together = ['event_name', 'event_type']
+        db_table = 'Events'
+
+    def __str__(self):
+        return f"{self.event_name} ({self.event_type})"
+
 class Department(models.Model):
     id = models.AutoField(primary_key=True)
     dept_name = models.CharField(max_length=100, unique=True)
 
+    class Meta:
+        db_table = 'Department'
+
     def __str__(self):
         return self.dept_name
-
 
 class Winner(models.Model):
     id = models.AutoField(primary_key=True)
@@ -27,11 +36,23 @@ class Winner(models.Model):
     position = models.CharField(choices=POSITION_CHOICES, max_length=10)
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
     class_name = models.CharField(max_length=100)  # Assuming class is a string value like "S1…
+    points = models.IntegerField(default=0)
+
+    class Meta:
+        db_table = 'Winner'
 
 class DepartmentResult(models.Model):
     id = models.AutoField(primary_key=True)
     department = models.OneToOneField(Department, on_delete=models.CASCADE)
     total_points = models.IntegerField(default=0)
+
+    def __str__(self):
+        return f"{self.department}: {self.total_points} points"
+    
+    class Meta:
+        db_table = 'DepartmentResult'
+
+    
 
 @receiver(post_save, sender=Winner)
 def update_department_points(sender, instance, created, **kwargs):

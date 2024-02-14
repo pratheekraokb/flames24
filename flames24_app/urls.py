@@ -11,8 +11,12 @@ urlpatterns = [
 
 
     path('adminSection/', views.adminHome, name="adminHome"),
-    path('adminsection/create-department/', views.create_edit_department, name='create_edit_department'),
+    path('adminSection/create-department/', views.create_edit_department, name='create_edit_department'),
+    path('adminSection/add-event/', views.addingEventsPage,name="addingEventPage"),
+
+
     path('api/create-department/', views.create_department, name='create_department'),
+    path('api/create-event/', views.create_event, name='createEvent'),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
