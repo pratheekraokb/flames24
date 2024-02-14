@@ -8,6 +8,11 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('', views.home, name="home"),
     path('about/', views.about, name="about"),
+
+
+    path('adminSection/', views.adminHome, name="adminHome"),
+    path('adminsection/create-department/', views.create_edit_department, name='create_edit_department'),
+    path('api/create-department/', views.create_department, name='create_department'),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

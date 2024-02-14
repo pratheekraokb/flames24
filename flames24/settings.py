@@ -57,9 +57,10 @@ import os
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-            os.path.join(BASE_DIR, 'flames24_app', 'templates'),
-        ],
+        # 'DIRS': [
+        #     os.path.join(BASE_DIR, 'flames24_app', 'templates'),
+        # ],
+        'DIRS': [os.path.join(BASE_DIR, 'flames24_app/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -80,17 +81,28 @@ WSGI_APPLICATION = 'flames24.wsgi.app'
 # Note: Django modules for using databases are not support in serverless
 # environments like Vercel. You can use a database over HTTP, hosted elsewhere.
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'flames24',            
+#         'USER': 'flames24_user',        
+#         'PASSWORD': '5jkTYR6sOd1e7wtUcxaKx4aePsltqs1I',    # Password (replace 'your_password' with the actual password)
+#         'HOST': 'dpg-cn53oqq1hbls73ai51ag-a.oregon-postgres.render.com', 
+#         # 'HOST': 'postgres://flames24_user:5jkTYR6sOd1e7wtUcxaKx4aePsltqs1I@dpg-cn53oqq1hbls73ai51ag-a.oregon-postgres.render.com/flames24', 
+#         'PORT': '5432',                 
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'flames24',            
-        'USER': 'flames24_user',        
-        'PASSWORD': '5jkTYR6sOd1e7wtUcxaKx4aePsltqs1I',    # Password (replace 'your_password' with the actual password)
-        'HOST': 'dpg-cn53oqq1hbls73ai51ag-a.oregon-postgres.render.com', 
-        # 'HOST': 'postgres://flames24_user:5jkTYR6sOd1e7wtUcxaKx4aePsltqs1I@dpg-cn53oqq1hbls73ai51ag-a.oregon-postgres.render.com/flames24', 
-        'PORT': '5432',                 
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'flames24',
+        'USER': 'root',
+        'PASSWORD': 'Pratheek@2003',
+        # 'HOST': 'your_mysql_host',
     }
 }
+
 
 
 

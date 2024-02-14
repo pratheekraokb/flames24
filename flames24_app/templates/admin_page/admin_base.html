@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flames'24 Admin Section</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 100vw;
+            min-height: 100vh;
+            /* background-color: gold; */
+            background-color: lightgray;
+            display: flex;
+                }
+
+        .dashboardLeft {
+            width: 25%;
+            min-height: 100%;
+            background-color: black;
+            color: white;
+        }
+
+        .dashboardLeft h1 {
+            text-align: center;
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        .FeatureBtns {
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .FeatureBtns button {
+            margin: 5px;
+            padding: 20px;
+            width: 60%;
+            background-color: black;
+            border: 2px solid gold;
+            color: skyblue;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .FeatureBtns button:hover {
+            background-color: gold;
+            border: 2px solid orangered;
+            color: black;
+            cursor: pointer;
+        }
+
+        .content {
+            width: 75%;
+            height: 100%;
+            padding-left:10px;
+            /* background-color: blue; */
+
+        }
+
+        @media only screen and (min-width: 600px) {
+
+            /* Apply styles for tablets and larger screens */
+            .container {
+                flex-direction: row;
+            }
+
+            .dashboardLeft {
+                width: 25%;
+            }
+
+            .FeatureBtns button {
+                width: 60%;
+                padding: 20px;
+                font-size: 18px;
+            }
+        }
+
+        @media only screen and (max-width: 600px) {
+
+            /* Apply styles for mobile phones */
+            .container {
+                flex-direction: column;
+                width: 100%;
+            }
+            .content{
+                width: 79.5%;
+            }
+
+            .dashboardLeft {
+                width: 100%;
+            }
+
+            .FeatureBtns button {
+                width: 80%;
+                padding: 15px;
+                font-size: 16px;
+            }
+        }
+
+            {% block styles %}
+
+            {% endblock %}
+    </style>
+
+</head>
+
+<body>
+    <div class="container" style="max-width: 100vw;">
+        <div class="dashboardLeft">
+            <h1>Admin Dashboard</h1>
+            <div class="FeatureBtns">
+                <button id="createBtn" onclick="linkTo('/adminsection/create-department')">Create and Edit Department</button>
+                <button id="addFixutureBtn" onclick="linkTo('/adminsection/add-fixtures/')">Add
+                    Schedules/Fixtures</button>
+                <button id="updateBtn" onclick="linkTo('/adminsection/update-scores/')">Update Cricket Score/Result</button>
+                <button id="updateBtn" onclick="linkTo('/adminsection/update-scores-football/')">Update Football Score/Result</button>
+                <br/>
+                <button id="returnHome" onclick="linkTo('/')">Return to Home</button>
+            </div>
+        </div>
+        <div class="content" style="max-width: 100vw;">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+</body>
+
+<script>
+    function linkTo(url) {
+        location.href = url
+    }
+    {% block scripts %} {% endblock %}
+</script>
+
+
+
+</html>

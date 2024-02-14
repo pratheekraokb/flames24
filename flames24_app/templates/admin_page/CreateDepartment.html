@@ -1,0 +1,87 @@
+{% extends 'admin_page/admin_base.html' %}
+
+{% block styles %}
+<style>
+    /* Add your custom styles here */
+    .form-container {
+        max-width: 500px;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+    }
+
+    .form-container label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .form-container input[type="text"],
+    .form-container input[type="submit"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        box-sizing: border-box;
+    }
+
+    .form-container input[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+
+    .form-container input[type="submit"]:hover {
+        background-color: #45a049;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <br/>
+    <h1>Add Department</h1>
+    <br>
+    <form id="departmentForm" method="POST">
+        {% csrf_token %}
+        <label for="dept_name">Department Name:</label>
+        <input type="text" id="dept_name" name="dept_name" placeholder="eg:- Computer Science & Engineering" required>
+        <input type="submit" value="Add Department">
+    </form>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#departmentForm').submit(function(event) {
+            event.preventDefault(); // Prevent the form from submitting normally
+            
+            var formData = {
+                'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(), // Include the CSRF token
+                'dept_name': $('#dept_name').val()
+            };
+            
+            $.ajax({
+                type: 'POST',
+                url: '/api/create-department/',
+                data: formData,
+                dataType: 'json',
+                encode: true
+            })
+            .done(function(data) {
+                // Handle success response
+                alert(data.message);
+                console.log(data);
+            })
+            .fail(function(data) {
+                // Handle error response
+                alert(data.message);
+                console.log(data);
+            });
+        });
+    });
+    </script>
+    
+{% endblock  %}
+
