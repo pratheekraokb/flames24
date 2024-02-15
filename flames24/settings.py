@@ -107,9 +107,7 @@ DATABASES = {
         'PASSWORD': 'vrRagtU2AE0L',
         'HOST': 'ep-young-salad-a4jyz6fk-pooler.us-east-1.aws.neon.tech',  # Or the IP address of your PostgreSQL server
         'PORT': '',
-        'OPTIONS': {
-            'sslmode': 'require',
-        },
+        
     }
 }
 
