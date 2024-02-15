@@ -18,10 +18,12 @@ urlpatterns = [
     path('dept-results/', views.deptResults, name="deptResults"),
     path('admin-signin/', views.signIn, name="signIn"),
     path('events_listing/', views.eventsListing, name="eventsListing"),
+    path('event_results/', views.eventsResults, name="eventsResults"),
 
 
     path('api/create-department/', views.create_department, name='create_department'),
     path('api/create-event/', views.create_event, name='createEvent'),
+    path('api/eventwinners/<int:eventid>/', views.event_winners_api, name='event_winners_api'),
     path('fetch-departments/', views.fetch_departments, name='fetch_departments'),
     
     

@@ -1,0 +1,243 @@
+{% extends 'user_page/user_base.html' %}
+
+{% block styles %}
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<style>
+    .navbar h2 {
+        margin: 0;
+        padding: 0;
+    }
+
+    .event-buttons {
+        margin-bottom: 20px;
+        width: 100%;
+        display: flex;
+    }
+
+    .event-buttons button {
+        width: 50%;
+        padding: 20px;
+        font-weight: bold;
+        font-size: 16px;
+    }
+
+    .event-buttons button:hover {
+        background-color: purple;
+    }
+
+    .event-table {
+        display: none;
+    }
+
+    .event-table.active {
+        display: block;
+    }
+
+    table {
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    h1 {
+        text-align: center;
+    }
+
+    table tr,
+    td {
+        text-align: center;
+    }
+
+    table th {
+        padding: 10px;
+        background-color: black;
+        color: white;
+        width: 30%;
+
+    }
+
+    button {
+        color: gold;
+        background-color: transparent;
+        border: 0;
+        cursor: pointer;
+    }
+
+    table td {
+        padding: 12px;
+        font-weight: bold;
+    }
+
+    table tr:hover {
+        background: purple;
+    }
+
+    .resultBtn {
+        color: black;
+        font-size: 16px;
+        font-weight: bold;
+        text-decoration: underline;
+
+    }
+</style>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+{% endblock %}
+
+{% block userContainer %}
+
+<div class="container-result">
+    <div class="event-buttons">
+        <button id="mens-events-btn">Men's Events</button>
+        <button id="womens-events-btn">Women's Events</button>
+    </div>
+    <h1 id="mens-events-heading">Men's Events</h1>
+    <h1 id="womens-events-heading" style="display: none;">Women's Events</h1>
+
+
+    <table id="mens-events-table" class="event-table">
+
+        <thead>
+            <tr>
+                <th>Sl Number</th>
+                <th>Event Name</th>
+                <th>Results</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for event in mens_events %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ event.event_name }}</td>
+                <td><button class="resultBtn" onclick="displayWinners({{ event.id }})">Click Here</button></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <table id="womens-events-table" class="event-table">
+        <thead>
+            <tr>
+                <th>Sl Number</th>
+                <th>Event Name</th>
+                <th>Results</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for event in womens_events %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ event.event_name }}</td>
+                <td><button class="resultBtn" onclick="displayWinners({{ event.id }})">Click Here</button></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<div class="modal" id="winnerModal" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" style="font-weight: bold;"></h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h5><span style="font-weight: bold;font-size: 17px;">First: </span><span style="font-size: 15px;"
+                        id="firstWinner"></span></h5>
+                <h5><span style="font-weight: bold;font-size: 17px;">Second:</span> <span style="font-size: 15px;"
+                        id="secondWinner"></span></h5>
+                <h5><span style="font-weight: bold;font-size: 17px;">Third: </span><span style="font-size: 15px;"
+                        id="thirdWinner"></span></h5>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    function displayWinners(event_id) {
+        $.ajax({
+            url: `/api/eventwinners/${event_id}/`,
+            type: 'GET',
+            success: function (data) {
+                $('#winnerModal').modal('show');
+                $('#winnerModal .modal-title').text(`${data['EventName']} Winners`);
+
+                if (data['First']) {
+                    $('#firstWinner').text(data['First']['winner_athlete'] + ' - ' + data['First']['class_name']);
+                } else {
+                    $('#firstWinner').text('');
+                }
+
+                if (data['Second']) {
+                    $('#secondWinner').text(data['Second']['winner_athlete'] + ' - ' + data['Second']['class_name']);
+                } else {
+                    $('#secondWinner').text('');
+                }
+
+                if (data['Third']) {
+                    $('#thirdWinner').text(data['Third']['winner_athlete'] + ' - ' + data['Third']['class_name']);
+                } else {
+                    $('#thirdWinner').text('');
+                }
+            },
+
+            error: function (xhr, status, error) {
+                console.log('Error:', error);
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        $('#winnerModal').modal('hide'); // Hide the modal initially
+
+        // Your other jQuery code here
+    });
+</script>
+<script>
+
+
+    $(document).ready(function () {
+
+        $('#mens-events-table').addClass('active');
+        $('#womens-events-table').removeClass('active');
+        $('#mens-events-heading').show();
+        $('#mens-events-btn').css('background-color', 'purple');
+        $('#womens-events-btn').css('color', 'black');
+        $('#mens-events-btn').css('color', 'gold');
+
+        $('#womens-events-table').removeClass('active');
+        $('#womens-events-heading').hide();
+
+        // Show/hide tables and headings based on button clicks
+        $('#mens-events-btn').click(function () {
+            $('#mens-events-table').addClass('active');
+            $('#womens-events-table').removeClass('active');
+
+            $('#mens-events-heading').show();
+            $('#womens-events-heading').hide();
+
+            $(this).css('background-color', 'purple');
+            $(this).css('color', 'gold');
+            $('#womens-events-btn').css('background-color', '');
+            $('#womens-events-btn').css('color', 'black');
+        });
+
+        $('#womens-events-btn').click(function () {
+            $('#womens-events-table').addClass('active');
+            $('#mens-events-table').removeClass('active');
+
+            $('#womens-events-heading').show();
+            $('#mens-events-heading').hide();
+
+            $(this).css('background-color', 'purple');
+            $(this).css('color', 'gold');
+            $('#mens-events-btn').css('background-color', '');
+            $('#mens-events-btn').css('color', 'black');
+        });
+    });
+</script>
+
+
+{% endblock %}

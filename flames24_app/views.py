@@ -157,3 +157,50 @@ def eventsListing(request):
         return render(request, 'user_page/events_listing.html', {'mens_events': mens_events, 'womens_events': womens_events})
     except Exception as e:
         return render(request, 'error.html', {'error_message': str(e)})
+    
+
+from django.http import JsonResponse
+from .models import Winner
+from django.shortcuts import get_object_or_404
+import json
+
+def event_winners_api(request, eventid):
+    event_winners = {
+        'EventName': '',
+        'First': '',
+        'Second': '',
+        'Third': ''
+    }
+    try:
+        eventid = int(eventid)
+        event = get_object_or_404(Event, id=eventid)
+        event_winners['EventName'] = str(event)
+        for position in ['First', 'Second', 'Third']:
+            winner = Winner.objects.filter(event_id=eventid, position=position).first()
+            if winner:
+                event_winners[position] = {
+                    'winner_athlete': winner.winner_athlete,
+                    'department_name': winner.department.dept_name,
+                    'class_name': winner.class_name
+                }
+        return JsonResponse(event_winners)
+    except Exception as e:
+        return JsonResponse({'error': str(e)})
+    
+
+import logging
+
+logger = logging.getLogger(__name__)
+
+def eventsResults(request):
+    try:
+        events = Event.objects.all().order_by('event_date')
+        mens_events = Event.objects.filter(event_type='Men').order_by('event_date')
+        womens_events = Event.objects.filter(event_type='Women').order_by('event_date')
+
+        print(mens_events, womens_events)
+        return render(request, 'user_page/event_result.html', {'mens_events': mens_events, 'womens_events': womens_events})
+    except Exception as e:
+        logger.error("An error occurred: %s", e)
+        return render(request, 'user_page/error.html', {'error_message': "An error occurred. Please try again later."})
+# /home/user/Desktop/Projects/django_host/flames24/flames24_app/templates/user_page/event_result.html
