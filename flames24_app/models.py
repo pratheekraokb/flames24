@@ -62,3 +62,11 @@ def update_department_points(sender, instance, created, **kwargs):
         department_result, created = DepartmentResult.objects.get_or_create(department=instance.department)
         department_result.total_points += instance.points
         department_result.save()
+
+
+class Image(models.Model):
+    image_id = models.CharField(max_length=100, unique=True)
+    image_url = models.URLField()
+
+    def __str__(self):
+        return self.image_id

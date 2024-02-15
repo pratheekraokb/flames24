@@ -8,7 +8,7 @@ from django.shortcuts import render
 
 from django.shortcuts import render
 from django.http import JsonResponse
-from .models import Department, Event, Winner
+from .models import Department, Event, Winner, Image
 from django.views.decorators.csrf import csrf_exempt
 from .forms import DepartmentForm
 import json
@@ -204,3 +204,10 @@ def eventsResults(request):
         logger.error("An error occurred: %s", e)
         return render(request, 'user_page/error.html', {'error_message': "An error occurred. Please try again later."})
 # /home/user/Desktop/Projects/django_host/flames24/flames24_app/templates/user_page/event_result.html
+    
+
+def gallary(request):
+    images = Image.objects.all()
+    image_data = [{'id': image.image_id, 'url': image.image_url} for image in images]
+    context = {'image_data': image_data}
+    return render(request, 'user_page/gallary.html', context)

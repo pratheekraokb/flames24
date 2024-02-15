@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Event, Department, Winner, DepartmentResult
+from .models import Event, Department, Winner, DepartmentResult, Image
 
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
@@ -24,3 +24,7 @@ class WinnerAdmin(admin.ModelAdmin):
 class DepartmentResultAdmin(admin.ModelAdmin):
     list_display = ('id', 'department', 'total_points')
     search_fields = ('department__dept_name',)
+
+@admin.register(Image)
+class ImageAdmin(admin.ModelAdmin):
+    list_display = ('image_id', 'image_url')
