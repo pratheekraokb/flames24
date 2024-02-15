@@ -16,7 +16,7 @@ class DepartmentAdmin(admin.ModelAdmin):
 
 @admin.register(Winner)
 class WinnerAdmin(admin.ModelAdmin):
-    list_display = ('id', 'event', 'position', 'department', 'class_name')
+    list_display = ('id', 'event','winner_athlete','position', 'department', 'class_name')
     list_filter = ('position', 'department')
     search_fields = ('class_name',)
 

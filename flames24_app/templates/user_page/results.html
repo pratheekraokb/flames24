@@ -1,0 +1,75 @@
+{% extends 'user_page/user_base.html' %}
+
+{% block styles %}
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<style>
+    
+    .navbar h2{
+        margin: 0;
+        padding: 0;
+    }
+    table{
+        /* padding-left:3px; */
+        padding: 0;
+        margin: 0;
+    }
+    table tr, td{
+        text-align:center;
+
+    }
+    table th{
+        padding:10px;
+        background-color:black;
+        color: white;
+    }
+    table td{
+        padding:12px;
+        font-weight:bold;
+        
+
+    }
+   
+    table tr:hover{
+        background:skyblue;
+
+    }
+    table tr:first-child {
+        background-color: green; /* Set background color of the first row to green */
+        color:yellow;
+    }
+</style>
+
+{% endblock %}
+
+{% block userContainer %}
+<div class="container-result">
+    <h1 style="text-align: center;font-size: xx-large;">Department Results</h1>
+    <table class="table table-striped table-bordered table-hover" border="0">
+        <thead>
+            <tr style="background-color: black;">
+                <th>Department</th>
+                <th>Total Points</th>
+            </tr>
+        </thead>
+        <tbody id="results-body">
+            {% for result in department_results %}
+            <tr>
+                <td>{{ result.department }}</td>
+                <td>{{ result.total_points }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+<script>
+    $(document).ready(function() {
+        // Add animations or other JavaScript logic here
+    });
+</script>
+
+  
+
+{% endblock %}

@@ -1,10 +1,110 @@
-{% load static %}
-<html>
+{% extends 'user_page/user_base.html' %}
 
-<body>
-    <h1>Hello from Vercel!</h1>
-    <p>The current time is.</p>
-    <img src="{% static 'example.png' %}" alt="Example Image">
-</body>
+{% block styles %}
+  <style>
+    /* Additional styles specific to the home page can be added here */
+    *{
+      padding: 0;
+      margin: 0;
+    }
+    h1.welcomeHead {
+      color: #04AA6D;
+      text-align: center;
+    }
 
-</html>
+    .card-container {
+      display: flex;
+      justify-content: center; /* Center the card container horizontally */
+      flex-wrap: wrap; /* Allow cards to wrap to the next row */
+      gap: 20px;
+    }
+    
+    
+    .card {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 60px;
+      transition: background-color 1.0s ease; /* Add transition for background color */
+    }
+
+    .card:hover {
+      background-color: #f0f0f0; /* Change background color on hover */
+    }
+
+    .card h2 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #4CAF50;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .heading{
+      /* width: 10w; */
+      padding: 30px;
+      /* background: linear-gradient(to bottom, #ff7e5f, #feb47b); */
+      color: brown;
+      letter-spacing: 3px;
+      text-align: center;
+      border-radius: 6px;
+    }
+    @media screen and (max-width: 600px) {
+      h1.welcomeHead{
+        color:black;
+        font-size: 26px;
+      }
+      @keyframes blink {
+      0% {
+        opacity: 0;
+        color: black; /* Start with red color */
+      }
+      50% {
+        opacity: 1;
+        color: red; /* Change to green color */
+      }
+      100% {
+        opacity: 0;
+        color: black; /* Change to blue color */
+      }
+    }
+    @keyframes move {
+      0% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-10px); /* Move up by 10 pixels */
+      }
+      100% {
+        transform: translateY(0);
+      }
+    }
+
+    #HeadingAnimate {
+      animation: blink 5s infinite, move 5s infinite; /* Adjust '2s' as needed */
+    }
+
+
+    }
+    
+  </style>
+{% endblock %}
+
+{% block userContainer %}
+  <div style="padding: 20px;">
+    <br/>
+    <!-- <h1 class="welcomeHead" id="HeadingAnimate">Welcome to <span>EL RUIDO'24</span> !</h1> -->
+   
+  </div>
+
+  
+
+{% endblock %}

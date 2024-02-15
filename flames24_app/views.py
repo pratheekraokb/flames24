@@ -13,6 +13,9 @@ from django.views.decorators.csrf import csrf_exempt
 from .forms import DepartmentForm
 import json
 
+from .models import DepartmentResult
+from django.core.serializers import serialize
+
 
 def home(request):
     return render(request,"user_page/home.html")
@@ -133,3 +136,8 @@ def add_winners(request):
         }
 
         return render(request, 'admin_page/AddingWinners.html', context)
+    
+
+def deptResults(request):
+    department_results = DepartmentResult.objects.all().order_by('-total_points')
+    return render(request, 'user_page/results.html', {'department_results': department_results})

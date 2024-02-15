@@ -1,0 +1,175 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flames'24</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    .navbar {
+      background-color: #333;
+      overflow: hidden;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+    }
+
+    .navbar a, .navbar select {
+      color: white;
+      text-decoration: none;
+      padding: 14px 16px;
+      border: none;
+      background: none;
+      font-size: 16px;
+      cursor: pointer;
+      font-weight: bolder;
+      color: yellow;
+    }
+
+    .navbar a:hover {
+      background-color: #ddd;
+      color: black;
+    }
+
+    .navbar a.active {
+      background-color: #04AA6D;
+      color: white;
+    }
+
+    .select-box {
+      margin-right: 20px;
+    }
+
+    .menu-icon {
+      display: none;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .sidebar {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      background-color: #333;
+      overflow-x: hidden;
+      transition: 0.5s;
+      padding-top: 60px;
+    }
+    
+
+    .sidebar a {
+      padding: 8px 8px 8px 32px;
+      text-decoration: none;
+      font-size: 18px;
+      color: white;
+      display: block;
+      transition: 0.3s;
+      border: 1px solid gray;
+      background-color: black;
+      color: yellow;
+      font-weight: bold;
+      margin-bottom: 2px;
+    }
+
+    .sidebar a:hover {
+      color: #04AA6D;
+    }
+
+    @media screen and (max-width: 600px) {
+      body{
+          background-image: linear-gradient(to right, #9796f0, #fbc7d4);
+          color:black;
+      }
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .navbar a, .navbar select {
+        {% comment %} width: 100%; {% endcomment %}
+        box-sizing: border-box;
+        margin-bottom: 10px;
+        
+      }
+
+      .select-box {
+        margin-right: 0;
+      }
+
+      .menu-icon {
+        display: block;
+      }
+      #titleHead{
+        padding-top:15px;
+        text-align:center;
+        justify-content:center;
+      }
+
+      .navbar a:not(.menu-icon) {
+        display: none;
+      }
+
+      .navbar a.active {
+        display: block;
+        /* color: greenyellow */
+      }
+    }
+    div.row{
+        display: flex;
+    }
+  </style>
+  {% block styles %}
+
+  {% endblock %}
+</head>
+<body>
+
+  <div class="navbar">
+    <div class="row">
+        <a class="menu-icon" onclick="toggleSidebar()">&#9776;</a>
+        <h2 style="color:white; display: flex;" id="titleHead"><span style="color:orange">FLAMES'24</span>&nbsp;</h2>
+    </div>
+    <a class="" href="/">Home</a>
+    {% comment %} <a href="/about/">About Us</a> {% endcomment %}
+    <a href="/contact/">Contact Us</a>
+    <a href="/adminSignIn/">Admin Login</a>
+
+
+  </div>
+
+  <!-- Sidebar Menu -->
+  <div class="sidebar" id="sidebar">
+    <a href="javascript:void(0)" class="close-btn" onclick="toggleSidebar()">&times;</a>
+    <a href="/">Home</a>
+    {% comment %} <a href="/about/">About Us</a> {% endcomment %}
+    {% comment %} <a href="/contact/">Contact Us</a> {% endcomment %}
+    <a href="/dept-results/">Departmentwise<br>Score</a>
+    <a href="/adminSection/">Admin Login</a>
+  </div>
+
+  {% block userContainer %}
+  {% endblock %}
+
+  <script>
+    function toggleSidebar() {
+      var sidebar = document.getElementById("sidebar");
+      sidebar.style.width = (sidebar.style.width === "250px") ? "0" : "250px";
+    }
+  </script>
+
+
+
+</body>
+</html>
