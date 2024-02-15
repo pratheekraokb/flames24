@@ -23,7 +23,7 @@
     }
 
     .event-buttons button:hover {
-        background-color: skyblue;
+        background-color: purple;
     }
 
     .event-table {
@@ -54,6 +54,12 @@
         color: white;
         width: 30%;
     }
+    button{
+        color:gold;
+        background-color: transparent;
+        border: 0;
+        cursor: pointer;
+    }
 
     table td {
         padding: 12px;
@@ -61,7 +67,7 @@
     }
 
     table tr:hover {
-        background: skyblue;
+        background: purple;
     }
 </style>
 {% endblock %}
@@ -119,7 +125,9 @@
         $('#mens-events-table').addClass('active');
         $('#womens-events-table').removeClass('active');
         $('#mens-events-heading').show();
-        $('#mens-events-btn').css('background-color', 'skyblue');
+        $('#mens-events-btn').css('background-color', 'purple');
+        $('#womens-events-btn').css('color', 'black');
+        $('#mens-events-btn').css('color', 'gold');
 
         $('#womens-events-table').removeClass('active');
         $('#womens-events-heading').hide();
@@ -132,8 +140,10 @@
             $('#mens-events-heading').show();
             $('#womens-events-heading').hide();
 
-            $(this).css('background-color', 'skyblue');
+            $(this).css('background-color', 'purple');
+            $(this).css('color', 'gold');
             $('#womens-events-btn').css('background-color', '');
+            $('#womens-events-btn').css('color', 'black');
         });
 
         $('#womens-events-btn').click(function() {
@@ -143,8 +153,10 @@
             $('#womens-events-heading').show();
             $('#mens-events-heading').hide();
 
-            $(this).css('background-color', 'skyblue');
+            $(this).css('background-color', 'purple');
+            $(this).css('color', 'gold');
             $('#mens-events-btn').css('background-color', '');
+            $('#mens-events-btn').css('color', 'black');
         });
     });
 </script>
