@@ -57,9 +57,6 @@ import os
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        # 'DIRS': [
-        #     os.path.join(BASE_DIR, 'flames24_app', 'templates'),
-        # ],
         'DIRS': [os.path.join(BASE_DIR, 'flames24_app/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -109,19 +106,11 @@ DATABASES = {
         'USER': 'default',
         'PASSWORD': 'vrRagtU2AE0L',
         'HOST': 'ep-young-salad-a4jyz6fk-pooler.us-east-1.aws.neon.tech',  # Or the IP address of your PostgreSQL server
-        # 'PORT': '5432',        # Or the port your PostgreSQL server is listening on
     }
 }
 
 
-# POSTGRES_URL="postgres://default:vrRagtU2AE0L@ep-young-salad-a4jyz6fk-pooler.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require"
-# POSTGRES_PRISMA_URL="postgres://default:vrRagtU2AE0L@ep-young-salad-a4jyz6fk-pooler.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require&pgbouncer=true&connect_timeout=15"
-# POSTGRES_URL_NO_SSL="postgres://default:vrRagtU2AE0L@ep-young-salad-a4jyz6fk-pooler.us-east-1.aws.neon.tech:5432/verceldb"
-# POSTGRES_URL_NON_POOLING="postgres://default:vrRagtU2AE0L@ep-young-salad-a4jyz6fk.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require"
-# POSTGRES_USER=""
-# POSTGRES_HOST=""
-# POSTGRES_PASSWORD=""
-# POSTGRES_DATABASE=""
+
 
 
 
