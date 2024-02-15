@@ -3,7 +3,6 @@ from django.urls import path
 
 from flames24_app import views
 from django.conf import settings
-from django.conf.urls.static import static
 
 urlpatterns = [
     path('', views.home, name="home"),
@@ -29,8 +28,3 @@ urlpatterns = [
     
 
 ]
-
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-
-# Serve media files during development
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
