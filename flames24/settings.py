@@ -93,16 +93,35 @@ WSGI_APPLICATION = 'flames24.wsgi.app'
 #     }
 # }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'flames24',
+#         'USER': 'root',
+#         'PASSWORD': 'Pratheek@2003',
+#         # 'HOST': 'your_mysql_host',
+#     }
+# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'flames24',
-        'USER': 'root',
-        'PASSWORD': 'Pratheek@2003',
-        # 'HOST': 'your_mysql_host',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'verceldb',
+        'USER': 'default',
+        'PASSWORD': 'vrRagtU2AE0L',
+        'HOST': 'ep-young-salad-a4jyz6fk-pooler.us-east-1.aws.neon.tech',  # Or the IP address of your PostgreSQL server
+        # 'PORT': '5432',        # Or the port your PostgreSQL server is listening on
     }
 }
 
+
+# POSTGRES_URL="postgres://default:vrRagtU2AE0L@ep-young-salad-a4jyz6fk-pooler.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require"
+# POSTGRES_PRISMA_URL="postgres://default:vrRagtU2AE0L@ep-young-salad-a4jyz6fk-pooler.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require&pgbouncer=true&connect_timeout=15"
+# POSTGRES_URL_NO_SSL="postgres://default:vrRagtU2AE0L@ep-young-salad-a4jyz6fk-pooler.us-east-1.aws.neon.tech:5432/verceldb"
+# POSTGRES_URL_NON_POOLING="postgres://default:vrRagtU2AE0L@ep-young-salad-a4jyz6fk.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require"
+# POSTGRES_USER=""
+# POSTGRES_HOST=""
+# POSTGRES_PASSWORD=""
+# POSTGRES_DATABASE=""
 
 
 
