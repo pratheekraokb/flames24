@@ -141,3 +141,6 @@ def add_winners(request):
 def deptResults(request):
     department_results = DepartmentResult.objects.all().order_by('-total_points')
     return render(request, 'user_page/results.html', {'department_results': department_results})
+
+def signIn(request):
+    return render(request,'user_page/signin.html')

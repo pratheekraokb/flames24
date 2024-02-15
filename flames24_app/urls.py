@@ -16,6 +16,8 @@ urlpatterns = [
 
     path('adminSection/add-winners/', views.add_winners, name='add_winners'),
     path('dept-results/', views.deptResults, name="deptResults"),
+    path('admin-signin/', views.signIn, name="signIn"),
+
 
     path('api/create-department/', views.create_department, name='create_department'),
     path('api/create-event/', views.create_event, name='createEvent'),
