@@ -144,3 +144,16 @@ def deptResults(request):
 
 def signIn(request):
     return render(request,'user_page/signin.html')
+
+def eventsListing(request):
+    try:
+        events = Event.objects.all().order_by('event_date')
+        
+
+        mens_events = Event.objects.filter(event_type='Men').order_by('event_date')
+        womens_events = Event.objects.filter(event_type='Women').order_by('event_date')
+
+        print(mens_events,womens_events)
+        return render(request, 'user_page/events_listing.html', {'mens_events': mens_events, 'womens_events': womens_events})
+    except Exception as e:
+        return render(request, 'error.html', {'error_message': str(e)})

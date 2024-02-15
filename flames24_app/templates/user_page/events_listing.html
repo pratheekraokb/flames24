@@ -1,0 +1,153 @@
+{% extends 'user_page/user_base.html' %}
+
+{% block styles %}
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<style>
+    .navbar h2 {
+        margin: 0;
+        padding: 0;
+    }
+
+    .event-buttons {
+        margin-bottom: 20px;
+        width: 100%;
+        display: flex;
+    }
+
+    .event-buttons button {
+        width: 50%;
+        padding: 20px;
+        font-weight: bold;
+        font-size: 16px;
+    }
+
+    .event-buttons button:hover {
+        background-color: skyblue;
+    }
+
+    .event-table {
+        display: none;
+    }
+
+    .event-table.active {
+        display: block;
+    }
+
+    table {
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        border-collapse: collapse;
+    }
+    h1{
+        text-align: center;
+    }
+    table tr,
+    td {
+        text-align: center;
+    }
+
+    table th {
+        padding: 10px;
+        background-color: black;
+        color: white;
+        width: 30%;
+    }
+
+    table td {
+        padding: 12px;
+        font-weight: bold;
+    }
+
+    table tr:hover {
+        background: skyblue;
+    }
+</style>
+{% endblock %}
+
+{% block userContainer %}
+
+<div class="container-result">
+    <div class="event-buttons">
+        <button id="mens-events-btn">Men's Events</button>
+        <button id="womens-events-btn">Women's Events</button>
+    </div>
+    <h1 id="mens-events-heading">Men's Events</h1>
+    <h1 id="womens-events-heading" style="display: none;">Women's Events</h1>
+
+
+    <table id="mens-events-table" class="event-table">
+        
+        <thead>
+            <tr>
+                <th>Sl Number</th>
+                <th>Event Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for event in mens_events %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ event.event_name }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <table id="womens-events-table" class="event-table">
+        <thead>
+            <tr>
+                <th>Sl Number</th>
+                <th>Event Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for event in womens_events %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ event.event_name }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    $(document).ready(function() {
+        
+        $('#mens-events-table').addClass('active');
+        $('#womens-events-table').removeClass('active');
+        $('#mens-events-heading').show();
+        $('#mens-events-btn').css('background-color', 'skyblue');
+
+        $('#womens-events-table').removeClass('active');
+        $('#womens-events-heading').hide();
+
+        // Show/hide tables and headings based on button clicks
+        $('#mens-events-btn').click(function() {
+            $('#mens-events-table').addClass('active');
+            $('#womens-events-table').removeClass('active');
+
+            $('#mens-events-heading').show();
+            $('#womens-events-heading').hide();
+
+            $(this).css('background-color', 'skyblue');
+            $('#womens-events-btn').css('background-color', '');
+        });
+
+        $('#womens-events-btn').click(function() {
+            $('#womens-events-table').addClass('active');
+            $('#mens-events-table').removeClass('active');
+
+            $('#womens-events-heading').show();
+            $('#mens-events-heading').hide();
+
+            $(this).css('background-color', 'skyblue');
+            $('#mens-events-btn').css('background-color', '');
+        });
+    });
+</script>
+  
+
+{% endblock %}
