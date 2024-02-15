@@ -206,7 +206,7 @@ def eventsResults(request):
 # /home/user/Desktop/Projects/django_host/flames24/flames24_app/templates/user_page/event_result.html
     
 
-def gallary(request):
+def gallery(request):
     images = Image.objects.all()
     image_data = [{'id': image.image_id, 'url': image.image_url} for image in images]
     context = {'image_data': image_data}

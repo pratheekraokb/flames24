@@ -18,7 +18,7 @@ urlpatterns = [
     path('admin-signin/', views.signIn, name="signIn"),
     path('events_listing/', views.eventsListing, name="eventsListing"),
     path('event_results/', views.eventsResults, name="eventsResults"),
-    path('gallery/',views.gallary, name="gallary"),
+    path('gallery/',views.gallery, name="gallery"),
 
 
     path('api/create-department/', views.create_department, name='create_department'),
