@@ -138,9 +138,50 @@ def add_winners(request):
         return render(request, 'admin_page/AddingWinners.html', context)
     
 
+# def deptResults(request):
+#     department_results = DepartmentResult.objects.all().order_by('-total_points')
+#     return render(request, 'user_page/results.html', {'department_results': department_results})
+from django.db import models
+
+
+def calculate_department_points():
+    department_results = DepartmentResult.objects.all().order_by('-total_points')
+
+    department_points = {}
+    for department_result in department_results:
+        department_name = department_result.department.dept_name
+        boys_points = Winner.objects.filter(event__event_type='Men', department=department_result.department).aggregate(sum_points=models.Sum('points'))['sum_points'] or 0
+        girls_points = Winner.objects.filter(event__event_type='Women', department=department_result.department).aggregate(sum_points=models.Sum('points'))['sum_points'] or 0
+        total_points = boys_points + girls_points
+        department_points[department_name] = {
+            'boys_points': boys_points,
+            'girls_points': girls_points,
+            'total_points': total_points
+        }
+
+    return department_points
+
 def deptResults(request):
     department_results = DepartmentResult.objects.all().order_by('-total_points')
-    return render(request, 'user_page/results.html', {'department_results': department_results})
+    department_points = calculate_department_points()
+    
+    department_results_formatted = []
+    for department_result in department_results:
+        department_name = department_result.department.dept_name
+        if department_name in department_points:
+            boys_points = department_points[department_name]['boys_points']
+            girls_points = department_points[department_name]['girls_points']
+            total_points = department_points[department_name]['total_points']
+            department_data = {
+                'department': department_name,
+                'mens_points': boys_points,
+                'womens_points': girls_points,
+                'total_points': total_points
+            }
+            department_results_formatted.append(department_data)
+    print(department_results_formatted)
+    return render(request, 'user_page/results.html', {'department_results': department_results_formatted})
+
 
 def signIn(request):
     return render(request,'user_page/signin.html')

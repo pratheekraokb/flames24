@@ -4,56 +4,83 @@
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <style>
-    
-    .navbar h2{
+    .navbar h2 {
         margin: 0;
         padding: 0;
     }
-    table{
+
+    table {
         /* padding-left:3px; */
         padding: 0;
         margin: 0;
     }
-    table tr, td{
-        text-align:center;
 
+    table tr,
+    td {
+        text-align: center;
     }
-    table th{
-        padding:10px;
-        background-color:black;
+
+    table th {
+        padding: 10px;
+        background-color: black;
         color: white;
         width: 30%;
     }
-    table td{
-        padding:12px;
-        font-weight:bold;
-        
 
+    table td {
+        padding: 12px;
+        font-weight: bold;
     }
-   
-    table tr:hover{
-        background:skyblue;
 
+    table tr:hover {
+        background: skyblue;
     }
+
     table tr:first-child {
-        background-color: green; /* Set background color of the first row to green */
-        color:yellow;
+        background-color: green;
+        color: yellow;
+    }
+    .btn-group button{
+        padding: 10px;
+        font-weight:bold;
+        cursor: pointer;
+       
+    }
+    .btn-group button.active {
+        background-color: transparent;
+        /* border: 0; */
+        /* text-decoration: underline; */
+        color:blue;
+    }
+
+    .btn-group button {
+        padding: 10px;
+        font-weight: bold;
+        cursor: pointer;
     }
 </style>
-
 {% endblock %}
 
 {% block userContainer %}
 <div class="container-result">
-    <h1 style="text-align: center;font-size: xx-large;">Department Results</h1>
-    <table class="table table-striped table-bordered table-hover" border="0">
+    <h1 style="text-align: center; font-size: xx-large;">Department Scores</h1>
+    
+    <!-- Buttons to toggle table visibility -->
+    <div class="btn-group" role="group" aria-label="Tables" style="display: flex;">
+        <button type="button" class="btn btn-primary" id="total-btn">Total Department Scores</button>
+        <button type="button" class="btn btn-primary" id="mens-btn">Mens Scores</button>
+        <button type="button" class="btn btn-primary" id="womens-btn">Womens Scores</button>
+    </div>
+    <br/>
+    <!-- Total Department Scores Table -->
+    <table class="table table-striped table-bordered table-hover" border="0" id="total-table">
         <thead>
             <tr style="background-color: black;">
                 <th>Department</th>
                 <th>Total Points</th>
             </tr>
         </thead>
-        <tbody id="results-body">
+        <tbody>
             {% for result in department_results %}
             <tr>
                 <td>{{ result.department }}</td>
@@ -62,15 +89,67 @@
             {% endfor %}
         </tbody>
     </table>
-</div>
 
+    <!-- Mens Scores Table -->
+    <table class="table table-striped table-bordered table-hover" border="0" id="mens-table" style="display: none;">
+        <thead>
+            <tr style="background-color: black;">
+                <th>Department</th>
+                <th>Mens Points</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for result in department_results %}
+            <tr>
+                <td>{{ result.department }}</td>
+                <td>{{ result.mens_points }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Womens Scores Table -->
+    <table class="table table-striped table-bordered table-hover" border="0" id="womens-table" style="display: none;">
+        <thead>
+            <tr style="background-color: black;">
+                <th>Department</th>
+                <th>Womens Points</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for result in department_results %}
+            <tr>
+                <td>{{ result.department }}</td>
+                <td>{{ result.womens_points }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 
 <script>
     $(document).ready(function() {
-        // Add animations or other JavaScript logic here
+        $('#total-btn').click(function() {
+            $('#total-table').show();
+            $('#mens-table').hide();
+            $('#womens-table').hide();
+            $(this).addClass('active').siblings().removeClass('active');
+        });
+
+        $('#mens-btn').click(function() {
+            $('#total-table').hide();
+            $('#mens-table').show();
+            $('#womens-table').hide();
+            $(this).addClass('active').siblings().removeClass('active');
+        });
+
+        $('#womens-btn').click(function() {
+            $('#total-table').hide();
+            $('#mens-table').hide();
+            $('#womens-table').show();
+            $(this).addClass('active').siblings().removeClass('active');
+        });
     });
 </script>
-
-  
 
 {% endblock %}
