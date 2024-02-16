@@ -164,23 +164,25 @@ def calculate_department_points():
 def deptResults(request):
     department_results = DepartmentResult.objects.all().order_by('-total_points')
     department_points = calculate_department_points()
+
+    mens_points = {}
+    womens_points = {}
     
-    department_results_formatted = []
     for department_result in department_results:
         department_name = department_result.department.dept_name
         if department_name in department_points:
             boys_points = department_points[department_name]['boys_points']
             girls_points = department_points[department_name]['girls_points']
-            total_points = department_points[department_name]['total_points']
-            department_data = {
-                'department': department_name,
-                'mens_points': boys_points,
-                'womens_points': girls_points,
-                'total_points': total_points
-            }
-            department_results_formatted.append(department_data)
-    print(department_results_formatted)
-    return render(request, 'user_page/results.html', {'department_results': department_results_formatted})
+            mens_points[department_name] = boys_points
+            womens_points[department_name] = girls_points
+
+    # Sort mens_points and womens_points dictionaries by values (points) in descending order
+    mens_points = {k: v for k, v in sorted(mens_points.items(), key=lambda item: item[1], reverse=True)}
+    womens_points = {k: v for k, v in sorted(womens_points.items(), key=lambda item: item[1], reverse=True)}
+
+    print(mens_points)
+    print(womens_points)
+    return render(request, 'user_page/results.html', {'mens_points': mens_points, 'womens_points': womens_points})
 
 
 def signIn(request):

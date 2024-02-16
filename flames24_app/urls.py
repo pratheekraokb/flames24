@@ -26,7 +26,5 @@ urlpatterns = [
     path('api/eventwinners/<int:eventid>/', views.event_winners_api, name='event_winners_api'),
     path('fetch-departments/', views.fetch_departments, name='fetch_departments'),
 
-    
-    
 
 ]
