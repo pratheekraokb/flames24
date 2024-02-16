@@ -254,12 +254,13 @@ def gallery(request):
     context = {'image_data': image_data}
     return render(request, 'user_page/gallary.html', context)
 
+from urllib.parse import unquote
 
 def get_winners_by_department_and_gender(request, department_name, character):
     try:
-        department_name = str(department_name)
-        character = str(character)
-        
+        department_name = unquote(department_name)
+        character = unquote(character)
+
         if character.upper() == 'M':
             gender = 'Men'
         elif character.upper() == 'F':
