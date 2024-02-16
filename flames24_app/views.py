@@ -257,6 +257,9 @@ def gallery(request):
 
 def get_winners_by_department_and_gender(request, department_name, character):
     try:
+        department_name = str(department_name)
+        character = str(character)
+        
         if character.upper() == 'M':
             gender = 'Men'
         elif character.upper() == 'F':
