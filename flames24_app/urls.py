@@ -24,6 +24,9 @@ urlpatterns = [
     path('api/create-department/', views.create_department, name='create_department'),
     path('api/create-event/', views.create_event, name='createEvent'),
     path('api/eventwinners/<int:eventid>/', views.event_winners_api, name='event_winners_api'),
+    path('api/<str:department_name>/<str:character>/', views.get_winners_by_department_and_gender, name="get_winners_by_department_and_gender"),
+
+
     path('fetch-departments/', views.fetch_departments, name='fetch_departments'),
 
 

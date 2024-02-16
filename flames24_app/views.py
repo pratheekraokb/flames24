@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 
 
-
+from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render
 from django.http import JsonResponse
 from .models import Department, Event, Winner, Image
@@ -180,8 +180,7 @@ def deptResults(request):
     mens_points = {k: v for k, v in sorted(mens_points.items(), key=lambda item: item[1], reverse=True)}
     womens_points = {k: v for k, v in sorted(womens_points.items(), key=lambda item: item[1], reverse=True)}
 
-    print(mens_points)
-    print(womens_points)
+   
     return render(request, 'user_page/results.html', {'mens_points': mens_points, 'womens_points': womens_points})
 
 
@@ -254,3 +253,22 @@ def gallery(request):
     image_data = [{'id': image.image_id, 'url': image.image_url} for image in images]
     context = {'image_data': image_data}
     return render(request, 'user_page/gallary.html', context)
+
+
+def get_winners_by_department_and_gender(request, department_name, character):
+    try:
+        if character.upper() == 'M':
+            gender = 'Men'
+        elif character.upper() == 'F':
+            gender = 'Women'
+        else:
+            return JsonResponse({'error': 'Invalid gender character'}, status=400)
+
+        winners = Winner.objects.filter(department__dept_name=department_name, event__event_type=gender)
+        data = [{'event_name': winner.event.event_name, 'winner_athlete': winner.winner_athlete, 'position': winner.position, 'points': winner.points} for winner in winners]
+
+        return JsonResponse({'winners': data})
+    except ObjectDoesNotExist:
+        return JsonResponse({'error': 'Department or gender not found'}, status=404)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
