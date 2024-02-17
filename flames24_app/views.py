@@ -167,21 +167,27 @@ def deptResults(request):
 
     mens_points = {}
     womens_points = {}
-    
+    overall_score = {}
+
     for department_result in department_results:
         department_name = department_result.department.dept_name
-        if department_name in department_points:
+        try:
             boys_points = department_points[department_name]['boys_points']
             girls_points = department_points[department_name]['girls_points']
             mens_points[department_name] = boys_points
             womens_points[department_name] = girls_points
+            overall_score[department_name] = boys_points + girls_points
+        except KeyError:
+            # Handle the case where department_points does not have the department_name key
+            pass
 
-    # Sort mens_points and womens_points dictionaries by values (points) in descending order
+    # Sort mens_points, womens_points, and overall_score dictionaries by values (points) in descending order
     mens_points = {k: v for k, v in sorted(mens_points.items(), key=lambda item: item[1], reverse=True)}
     womens_points = {k: v for k, v in sorted(womens_points.items(), key=lambda item: item[1], reverse=True)}
+    overall_score = {k: v for k, v in sorted(overall_score.items(), key=lambda item: item[1], reverse=True)}
 
-   
-    return render(request, 'user_page/results.html', {'mens_points': mens_points, 'womens_points': womens_points})
+    return render(request, 'user_page/results.html', {'mens_points': mens_points, 'womens_points': womens_points, 'overall_score': overall_score})
+
 
 
 def signIn(request):
